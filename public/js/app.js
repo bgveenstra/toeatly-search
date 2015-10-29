@@ -10,7 +10,7 @@ function pageLoad() {
   // set event listener for search form 
   // (just logs input for sanity check)
   $("#search-form").on("submit", function(e){
-    console.log($("#search-name").val());
+    console.log("searching: ", $("#search-name").val());
   });
 
 

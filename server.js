@@ -37,15 +37,26 @@ app.get("/api/foods", function (req, res){
 // search route
 app.post("/search", function (req, res){
 	console.log('search term is ', req.body.searchName);
-	res.send("searching");
+	db.Food.find({name: req.body.searchName}, function(err, foundFoods){
+		if (err) { return console.log("find error in search: " + err); }
+		// console.log(foundFoods);
+		res.locals.searchFoods = foundFoods;
+		console.log(res.locals);
+		res.redirect("/results");
+	});
+});
+
+app.get("/results", function(req, res){
+	console.log('results res.locals: ',res.locals);
+	res.send("results");
 });
 
 // api route to create new food
 app.post("/api/foods", function (req, res){
   var newFood = req.body;
    console.log(newFood);
-   // newFood is something like
-   // { name: "apple", yumminess: "good and good for you"}
+   // newFood is an object, for example
+   // { name: "apple", yumminess: "good, and good for you!" }
   db.Food.create(newFood, function(err, food){
     if (err) { return console.log("create error: " + err); }
     console.log("created ", food.name, food.yumminess);
