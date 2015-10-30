@@ -10,7 +10,15 @@ function pageLoad() {
   // set event listener for search form 
   // (just logs input for sanity check)
   $("#search-form").on("submit", function(e){
+    e.preventDefault();
     console.log("searching: ", $("#search-name").val());
+    $.post("/search", $(this).serialize(), function(response){
+      $('#search-results').empty();
+      for (var i=0; i<response.length; i++){
+        $('#search-results').append(makeResultHTML(response[i]));
+      }
+      $(this).reset();
+    });
   });
 
 
@@ -54,9 +62,16 @@ function deleteFood(context) {
 
 
 function makeHTMLString(food){
-  return '<li class="list-group-item"><h4 class="list-group-item-heading">' + food.name +
+  return '<li class="list-group-item" id="'+food._id+'"><h4 class="list-group-item-heading">' + food.name +
   '</h4><span class="list-group-item-text">' + food.yumminess + '</span>' +
-  '<button data-id='+ food.id + ' type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+  '<button data-id='+ food._id + ' type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+  '</li>';
+}
+
+function makeResultHTML(food){
+  return '<li class="list-group-item"><h4 class="list-group-item-heading">' + 
+  '<a href="#' + food._id + '">' + food.name + '</a>' +
+  '</h4><span class="list-group-item-text">' + food.yumminess + '</span>' +
   '</li>';
 }
 

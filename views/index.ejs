@@ -17,36 +17,49 @@
 </head>
 <body>
   <div id="page-wrapper" class="container">
-
     <header class="page-header">
       <h1>ToEat.ly <small>Put it in my belly!</small></h1>
     </header>
 
-    <!-- food search form -->
-    <form id="search-form" class="form-inline" method="POST" action="/search">
-      <input id="search-name" name="searchName" type="text" class="form-control" placeholder="Search Food by Name">
-      <button type="submit" class="btn btn-default">Search</button>
-    </form>
-
+    <div class="row">
+    <div class="col-md-6">
     <!-- new food form -->
     <form class="form-inline" id="new-food-form">
       <input name="name" type="text" class="form-control" id="food-name-input" placeholder="Name">
       <input name="yumminess" type="text" class="form-control" id="food-yumminess-input" placeholder="Yumminess">
       <button type="submit" class="btn btn-default">Eat me!</button>
     </form>
+    </div>
 
+    <div class="col-md-6">
+    <!-- food search form -->
+    <form id="search-form" class="form-inline">
+      <input id="search-name" name="searchName" type="text" class="form-control" placeholder="Search Food by Name">
+      <button type="submit" class="btn btn-default">Search</button>
+    </form>
+    </div>
 
+    
+
+    <div class="row">
+    <div class="col-md-6">
     <!-- list of foods -->
     <ul class="list-group" id="food-ul">
       <% for(var i=0; i<foods.length; i++) { %>
-        <li class='list-group-item'>
+        <li class='list-group-item' id="<%=foods[i]._id%>">
           <h4 class="list-group-item-heading"><%= foods[i].name %></h4>
           <span class="list-group-item-text"><%= foods[i].yumminess %></span>
           <button data-id="<%=foods[i]._id%>" type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         </li>
       <% } %>  
     </ul>
-
+    </div>
+    <div class="col-md-6">
+    <!-- search results list -->
+    <ul class="list-group" id="search-results">
+    </ul>
+    </div>
+    </div>
   </div>
 </body>
 </html>

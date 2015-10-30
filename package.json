@@ -12,6 +12,7 @@
     "body-parser": "^1.14.1",
     "ejs": "^2.3.4",
     "express": "^4.12.3",
+    "express-session": "^1.12.1",
     "mongoose": "^4.2.3"
   }
 }

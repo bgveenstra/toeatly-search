@@ -4,7 +4,8 @@
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
-    mongoose = require("mongoose");
+    mongoose = require("mongoose"),
+    session = require("express-session");
 
 
 var db = require('./models');
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 app.use("/static", express.static("public"));
 // body parser config to accept our datatypes
 app.use(bodyParser.urlencoded({ extended: true }));
+// configure session
 
 // ROUTES //
 app.get("/", function (req, res){
@@ -40,15 +42,8 @@ app.post("/search", function (req, res){
 	db.Food.find({name: req.body.searchName}, function(err, foundFoods){
 		if (err) { return console.log("find error in search: " + err); }
 		// console.log(foundFoods);
-		res.locals.searchFoods = foundFoods;
-		console.log(res.locals);
-		res.redirect("/results");
+		res.json(foundFoods);
 	});
-});
-
-app.get("/results", function(req, res){
-	console.log('results res.locals: ',res.locals);
-	res.send("results");
 });
 
 // api route to create new food
